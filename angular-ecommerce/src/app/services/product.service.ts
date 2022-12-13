@@ -25,22 +25,24 @@ export class ProductService {
     );
   }
 
-  getProductList(): Observable<Product[]> {
-    return this.httpClient.get<GetResponse>(this.baseUrl).pipe(
+  getProductList(theCategoryId: number): Observable<Product[]> {
+
+    // need to build URL based on category id
+    const searchurl = `${this.baseUrl}/search/findByCategoryId?id=${theCategoryId}`;
+    return this.httpClient.get<GetResponseProducts>(searchurl).pipe(
       map(response => response._embedded.products)
     );
+  }
+}
+
+interface GetResponseProducts {
+  _embedded: {
+    products: Product[];
   }
 }
 
 interface GetResponseProductCategory {
   _embedded: {
     productCategory: ProductCategory[];
-  }
-
-}
-
-interface GetResponse {
-  _embedded: {
-    products: Product[];
   }
 }
