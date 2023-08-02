@@ -12,6 +12,7 @@ import { OrderItem } from 'src/app/common/order-item';
 import { Purchase } from 'src/app/common/purchase';
 import { environment } from 'src/environments/environment';
 import { PaymentInfo } from 'src/app/common/payment-info';
+import { Address } from 'src/app/common/address';
 
 @Component({
   selector: 'app-checkout',
@@ -20,7 +21,7 @@ import { PaymentInfo } from 'src/app/common/payment-info';
 })
 export class CheckoutComponent implements OnInit {
 
-  checkoutFormGroup: FormGroup;
+  checkoutFormGroup: FormGroup | undefined;
 
   totalPrice: number = 0;
   totalQuantity: number = 0;
@@ -58,7 +59,7 @@ export class CheckoutComponent implements OnInit {
     this.reviewCartDetails();
 
     // read the user's email address from browser storage
-    const theEmail = JSON.parse(this.storage.getItem('userEmail'));
+    const theEmail = JSON.parse(this.storage.getItem('userEmail')!);
 
     this.checkoutFormGroup = this.formBuilder.group({
       customer: this.formBuilder.group({
@@ -153,7 +154,7 @@ export class CheckoutComponent implements OnInit {
     this.cardElement.mount('#card-element');
 
     // Add event binding for the 'change' event on the card element
-    this.cardElement.on('change', (event) => {
+    this.cardElement.on('change', (event: { complete: any; error: { message: any; }; }) => {
 
       // get a handle to card-errors element
       this.displayError = document.getElementById('card-errors');
@@ -255,6 +256,7 @@ export class CheckoutComponent implements OnInit {
 
     // set up purchase
     let purchase = new Purchase();
+    purchase.shippingAddress = new Address();
 
     // populate purchase - customer
     purchase.customer = this.checkoutFormGroup.controls['customer'].value;
@@ -310,7 +312,7 @@ export class CheckoutComponent implements OnInit {
                 }
               }
             }, { handleActions: false })
-          .then(function(result) {
+          .then((result: { error: { message: any; }; }) => {
             if (result.error) {
               // inform the customer there was an error
               alert(`There was an error: ${result.error.message}`);
@@ -331,7 +333,8 @@ export class CheckoutComponent implements OnInit {
                 }
               })
             }
-          }.bind(this));
+          },
+          CheckoutComponent.bind(this));
         }
       );
     } else {

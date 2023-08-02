@@ -37,12 +37,12 @@ export class LoginComponent implements OnInit {
 
     this.oktaSignin.renderEl({
       el: '#okta-sign-in-widget'}, // this name should be same as div tag id in login.component.html
-      (response) => {
+      (response: { status: string; }) => {
         if (response.status === 'SUCCESS') {
           this.oktaAuthService.signInWithRedirect();
         }
       },
-      (error) => {
+      (error: any) => {
         throw error;
       }
     );

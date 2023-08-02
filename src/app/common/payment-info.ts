@@ -1,5 +1,5 @@
 export class PaymentInfo {
-    amount: number;
-    currency: string;
-    receiptEmail: string;
+    amount: number | undefined;
+    currency: string| undefined;
+    receiptEmail: string| undefined;
 }

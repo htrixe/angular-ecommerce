@@ -2,10 +2,10 @@ import { Product } from './product';
 
 export class CartItem {
 
-    id: string;
-    name: string;
-    imageUrl: string;
-    unitPrice: number;
+    id: string | undefined; 
+    name: string  | undefined;
+    imageUrl: string | undefined;
+    unitPrice: number | undefined;
 
     quantity: number;
 

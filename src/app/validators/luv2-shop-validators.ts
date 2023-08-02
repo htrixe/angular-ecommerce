@@ -13,7 +13,7 @@ export class Luv2ShopValidators {
         }
         else {
             // valid, return null
-            return null;
+            return {};
         }
     }
 }

@@ -32,7 +32,7 @@ import { OrderHistoryComponent } from './components/order-history/order-history.
 import { AuthInterceptorService } from './services/auth-interceptor.service';
 
 const oktaConfig = Object.assign({
-  onAuthRequired: (oktaAuth, injector) => {
+  onAuthRequired: (oktaAuth: any, injector: { get: (arg0: typeof Router) => any; }) => {
     const router = injector.get(Router);
 
     // Redirect the user to your custom login page
