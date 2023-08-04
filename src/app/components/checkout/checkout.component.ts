@@ -207,7 +207,7 @@ export class CheckoutComponent implements OnInit {
 
 
 
-  copyShippingAddressToBillingAddress(event) {
+  copyShippingAddressToBillingAddress(event: any) {
 
     if (event.target.checked) {
       this.checkoutFormGroup.controls.billingAddress
@@ -256,7 +256,6 @@ export class CheckoutComponent implements OnInit {
 
     // set up purchase
     let purchase = new Purchase();
-    purchase.shippingAddress = new Address();
 
     // populate purchase - customer
     purchase.customer = this.checkoutFormGroup.controls['customer'].value;
